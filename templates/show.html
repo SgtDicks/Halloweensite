@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Programmed Show{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Programmed Show</h2>
+        <iframe src="{{ show_url }}" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+    </div>
+{% endblock %}

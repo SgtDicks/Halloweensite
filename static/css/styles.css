@@ -1,0 +1,22 @@
+html, body {
+    height: 100%;
+}
+
+#content-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+    position: relative;
+    width: 100%;
+    margin-top: auto; /* Make sure footer stays at the bottom */
+}

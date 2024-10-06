@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- [Head Content: Meta tags, Bootstrap CSS, etc.] -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Halloween Brisbane/Ipswich Chat{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Modern Font with a Slightly Spooky Touch) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% block head %}{% endblock %}
+    <style>
+        /* General Theme Styles */
+        html, body {
+            height: 100%; /* Ensure the HTML and body take up the full height of the viewport */
+            background-color: #2b2b2b; /* Dark, neutral background for a subtle Halloween look */
+            color: #f8f9fa; /* Light color for good contrast */
+            font-family: 'Roboto', sans-serif; /* Clean, modern font */
+        }
+        #content-wrapper {
+            min-height: 100vh; /* Ensure the content wrapper takes up the full height of the viewport */
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex-grow: 1; /* Allow the main content area to grow and take up available space */
+        }
+        /* Navigation Bar */
+        .navbar {
+            background-color: #343a40 !important; /* Dark grey for a subtle spooky look */
+        }
+        .navbar-brand {
+            color: #ff7f50 !important; /* Coral color for a warm Halloween accent */
+        }
+        .navbar-brand:hover {
+            color: #ffa07a !important; /* Lighter coral for hover */
+        }
+        .nav-link {
+            color: #f8f9fa !important; /* Light color for nav links */
+        }
+        .nav-link:hover {
+            color: #ffa07a !important; /* Accent color for link hover */
+        }
+        /* Footer Styling */
+        footer {
+            background-color: #343a40; /* Dark background for the footer */
+            color: #f8f9fa; /* Light text color for the footer */
+            margin-top: auto; /* Push the footer to the bottom of the page */
+            padding: 20px;
+            width: 100%;
+        }
+        footer a {
+            color: #f8f9fa; /* Light color for footer links */
+        }
+        footer a:hover {
+            color: #ffa07a; /* Accent color for link hover in footer */
+        }
+        /* Flash Messages */
+        .alert {
+            background-color: #444; /* Dark background for alert messages */
+            color: #f8f9fa; /* Light text color for alerts */
+            border-color: #ffa07a; /* Accent color for alert border */
+        }
+        .btn-close {
+            filter: invert(1); /* Invert colors for close button to make it visible on dark background */
+        }
+        /* Buttons */
+        .btn-primary {
+            background-color: #ff7f50; /* Coral color for primary buttons */
+            border-color: #ff7f50;
+        }
+        .btn-primary:hover {
+            background-color: #ffa07a; /* Lighter coral for hover state */
+            border-color: #ffa07a;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px; /* Set the width of the scrollbar */
+        }
+        ::-webkit-scrollbar-track {
+            background: #2b2b2b; /* Dark background for the scrollbar track */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffa07a; /* Coral color for the scrollbar thumb */
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff7f50; /* Darker coral for scrollbar thumb hover */
+        }
+    </style>
+</head>
+<body>
+    <div id="content-wrapper" class="d-flex flex-column vh-100">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('home') }}">
+                    <i class="fas fa-pumpkin fa-lg"></i> Halloween Brisbane/Ipswich Chat <!-- Icon and brand name -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span> <!-- Hamburger icon for mobile navigation -->
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        {% if current_user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('map') }}"><i class="fas fa-map-marked-alt"></i> Map</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('chat') }}"><i class="fas fa-comments"></i> Chat</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profile</a>
+                            </li>
+                            {% if current_user.show_url %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('show') }}" target="_blank">
+                                        <i class="fas fa-tv"></i> Programmed Show <!-- Link to programmed show if available -->
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if current_user.is_mod %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('admin_dashboard') }}"><i class="fas fa-user-shield"></i> Admin</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('map') }}"><i class="fas fa-map-marked-alt"></i> Map</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('chat') }}"><i class="fas fa-comments"></i> Chat</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Flash Messages -->
+        <main class="flex-shrink-0 mt-5 pt-5">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="container mt-5 pt-3">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                {{ message }} <!-- Flash message content -->
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- Main Content -->
+            <div class="container mt-5">
+                {% block content %}{% endblock %} <!-- Placeholder for page-specific content -->
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="py-4">
+            <div class="container text-center">
+                <p class="mb-0">&copy; {{ current_year }} Halloween Brisbane/Ipswich Chat. no Rights Reserved.</p> <!-- Footer copyright info -->
+                <div class="mt-2">
+                    <!-- Social Media Links -->
+                    <a href="https://www.facebook.com/halloween.on.plover.street" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SocketIO JS -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    {% block scripts %}{% endblock %} <!-- Placeholder for additional scripts -->
+</body>
+</html>

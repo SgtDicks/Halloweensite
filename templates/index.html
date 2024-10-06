@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Halloween Brisbane/Ipswich Chat{% endblock %}
+
+{% block head %}
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .hero-section {
+            background-image: url("{{ url_for('static', filename='images/haunted_background.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            position: relative;
+        }
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .feature-icon {
+            font-size: 3rem;
+            color: #ff6f61;
+        }
+        .chat-message {
+            color: #333; /* Ensure chat messages are visible */
+        }
+        .list-group-item {
+            background-color: #444;
+            color: #f8f9fa;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <header class="hero-section text-center">
+        <div class="container hero-content">
+            <h1 class="display-4">Welcome to Halloween Brisbane/Ipswich Chat!</h1>
+            <p class="lead">Connect, communicate, and celebrate the spooky season with friends and moderators.</p>
+            {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg mt-3">
+                    <i class="fas fa-user-plus"></i> Get Started
+                </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Features</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-comments feature-icon mb-3"></i>
+                            <h5 class="card-title">Real-Time Chat</h5>
+                            <p class="card-text">Engage in instant conversations with users from around the world.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-user-shield feature-icon mb-3"></i>
+                            <h5 class="card-title">Secure Moderation</h5>
+                            <p class="card-text">Our moderators ensure a safe and friendly environment for everyone.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 text-center shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-users feature-icon mb-3"></i>
+                            <h5 class="card-title">Community Engagement</h5>
+                            <p class="card-text">Participate in community events and share your Halloween experiences.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="bg-light text-dark py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">How It Works</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h4>Join the Community</h4>
+                    <p>Create an account to start chatting with fellow Halloween enthusiasts. Whether you're here to share stories, seek advice, or just have fun, there's a place for you.</p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h4>Engage in Real-Time Conversations</h4>
+                    <p>Use our real-time chat feature to communicate instantly. Enjoy seamless interactions and build connections with users from all over the globe.</p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h4>Moderation and Safety</h4>
+                    <p>Our dedicated moderators keep the community safe by monitoring conversations and addressing any inappropriate behavior promptly.</p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h4>Participate in Events</h4>
+                    <p>Join special Halloween events, contests, and discussions to make your experience even more thrilling and enjoyable.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Preview Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Recent Chats</h2>
+            <div id="chat-preview" class="border rounded p-3 mb-3" style="height: 300px; overflow-y: scroll;">
+                {% if messages %}
+                    {% for message in messages[-10:] %}
+                        <div class="chat-message {% if message.user_id == current_user.id %}user-message{% else %}mod-message{% endif %}">
+                            <strong><a href="{{ url_for('profile', user_id=message.user.id) }}" class="text-decoration-none text-warning">{{ message.user.username }}</a></strong> [{{ message.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}]: {{ message.content }}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center">No recent chats available.</p>
+                {% endif %}
+            </div>
+            <a href="{{ url_for('chat') }}" class="btn btn-primary">View Full Chat</a>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="text-center py-5">
+        <div class="container">
+            <h2 class="mb-4">Ready to Dive In?</h2>
+            {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">
+                    <i class="fas fa-user-plus"></i> Register
+                </a>
+                <a href="{{ url_for('login') }}" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            {% else %}
+                <a href="{{ url_for('chat') }}" class="btn btn-success btn-lg">
+                    <i class="fas fa-comments"></i> Enter Chat
+                </a>
+                {% endif %}
+
+        </div>
+    </section>
+
+{% endblock %}

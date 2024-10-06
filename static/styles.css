@@ -1,0 +1,230 @@
+/* static/styles.css */
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1em 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content Styles */
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+#map-section {
+    margin-bottom: 40px;
+}
+
+h2 {
+    color: #4CAF50;
+}
+
+/* Map Container Styles */
+#map {
+    width: 100%;
+    height: 500px;  /* Default height for desktop */
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat Box Styles */
+#chat-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 300px;
+    overflow-y: scroll;
+    background-color: #fff;
+}
+
+#messages {
+    list-style-type: none;
+    padding: 0;
+}
+
+#messages li {
+    padding: 5px 0;
+}
+
+#chat-form {
+    display: flex;
+    margin-top: 10px;
+}
+
+#chat-form input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#chat-form button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+#chat-form button:hover {
+    background-color: #45a049;
+}
+
+/* Moderation Panel Styles */
+#moderation-section {
+    border: 2px solid #f44336;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffe6e6;
+}
+
+#moderation-section h3 {
+    color: #f44336;
+}
+
+#moderation-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#moderation-section ul li {
+    padding: 5px 0;
+}
+
+#moderation-section ul li button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#moderation-section ul li button:hover {
+    background-color: #d32f2f;
+}
+
+/* Layer Toggles Section */
+#layer-toggles {
+    margin-bottom: 40px;
+}
+
+#layer-toggles label {
+    font-size: 16px;
+}
+
+#layer-toggles input {
+    margin-right: 10px;
+}
+
+/* Responsive Design for Tablets */
+@media screen and (max-width: 768px) {
+    #map {
+        height: 400px;  /* Adjusted height for tablets */
+    }
+}
+
+/* Responsive Design for Mobile Phones */
+@media screen and (max-width: 600px) {
+    #map {
+        height: 300px;  /* Adjusted height for mobile phones */
+    }
+
+    header nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    /* Adjust Layer Toggles for Mobile */
+    #layer-toggles label {
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Flash Messages */
+.flash {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.flash.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flash.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.flash.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

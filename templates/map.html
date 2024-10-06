@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Map - Halloween Host Chat{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <h2 class="text-center mb-4">Halloween Maps</h2>
+    <div class="btn-group d-flex justify-content-center mb-4" role="group">
+        <button type="button" class="btn btn-primary" onclick="showMap('brisbane')">Brisbane Map</button>
+        <button type="button" class="btn btn-secondary" onclick="showMap('ipswich')">Ipswich Map</button>
+    </div>
+    
+    <!-- Brisbane Map -->
+    <div id="brisbane" class="map-embed">
+        <iframe 
+            src="https://www.google.com/maps/d/embed?mid=1-XFG8H5I1Vy2PaNMSEdxS3006cMWWXE&ll=-27.59688,152.93799&z=11&ehbc=2E312F" 
+            width="100%" 
+            height="480" 
+            style="border:0;" 
+            allowfullscreen 
+            loading="lazy">
+        </iframe>
+    </div>
+
+    <!-- Ipswich Map -->
+    <div id="ipswich" class="map-embed" style="display: none;">
+        <iframe 
+            src="https://www.google.com/maps/d/embed?mid=1rO7rQlUCjN_8xm7dDY41_xqmJhIKxbs&ll=-27.59688,152.93799&z=11&ehbc=2E312F" 
+            width="100%" 
+            height="480" 
+            style="border:0;" 
+            allowfullscreen 
+            loading="lazy">
+        </iframe>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    function showMap(mapId) {
+        // Hide both maps initially
+        document.getElementById('brisbane').style.display = 'none';
+        document.getElementById('ipswich').style.display = 'none';
+
+        // Show the selected map
+        document.getElementById(mapId).style.display = 'block';
+    }
+</script>
+{% endblock %}
